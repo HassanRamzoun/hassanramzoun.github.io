@@ -1,0 +1,55 @@
+body{
+font-family:Arial;
+margin:0;
+background:#f4f6f9;
+direction:rtl;
+}
+
+header{
+background:#0f172a;
+color:white;
+padding:25px;
+text-align:center;
+}
+
+nav{
+background:#111827;
+padding:12px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:0 15px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.container{
+padding:40px;
+max-width:1000px;
+margin:auto;
+}
+
+.card{
+background:white;
+padding:25px;
+margin:20px 0;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.app{
+background:white;
+padding:20px;
+margin:15px 0;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+}
+
+footer{
+background:#eee;
+text-align:center;
+padding:20px;
+margin-top:40px;
+}
