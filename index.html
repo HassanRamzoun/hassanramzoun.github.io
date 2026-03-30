@@ -36,7 +36,6 @@
 
     h1 { color: var(--accent); font-size: 50px; }
 
-    /* SEARCH */
     .search-box {
       text-align: center;
       margin-bottom: 30px;
@@ -47,10 +46,8 @@
       width: 300px;
       border-radius: 20px;
       border: none;
-      outline: none;
     }
 
-    /* APPS GRID */
     .apps-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -63,7 +60,6 @@
       border-radius: 20px;
       padding: 20px;
       transition: 0.3s;
-      cursor: pointer;
     }
 
     .app-card:hover {
@@ -81,7 +77,7 @@
       width: 70px;
       height: 70px;
       border-radius: 15px;
-      background: #ccc;
+      object-fit: cover;
     }
 
     .screenshots {
@@ -101,35 +97,21 @@
       padding: 10px;
       border: none;
       border-radius: 10px;
-      background: var(--accent);
+      background: linear-gradient(45deg,#00cfff,#00ffcc);
+      font-weight: bold;
       cursor: pointer;
     }
 
-    /* MODAL */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.8);
+    .details-page {
       display: none;
-      justify-content: center;
-      align-items: center;
+      padding: 40px;
     }
 
-    .modal-content {
-      background: #111;
-      padding: 20px;
-      border-radius: 20px;
-      width: 90%;
-      max-width: 600px;
-    }
-
-    .close {
-      float: right;
+    .back-btn {
+      margin-bottom: 20px;
+      display: inline-block;
       cursor: pointer;
-      color: red;
+      color: var(--accent);
     }
 
   </style>
@@ -139,65 +121,84 @@
 
 <div id="particles-js"></div>
 
-<header>
+<header id="mainHeader">
   <h1>Ramzoun Coding</h1>
   <p>Build. Innovate. Code.</p>
 </header>
 
-<div class="search-box">
+<div class="search-box" id="searchBox">
   <input type="text" placeholder="Search apps..." onkeyup="searchApps(this.value)" />
 </div>
 
 <section class="apps-container" id="apps">
 
-  <div class="app-card" onclick="openApp('Fruity Match Blast')">
+  <div class="app-card" onclick="openPage('ocr')">
     <div class="app-header">
-      <div class="app-icon"></div>
-      <div>
-        <h3>Fruity Match Blast</h3>
-        <small>⭐ 4.8 • Game</small>
-      </div>
-    </div>
-    <div class="screenshots">
-      <img src="https://via.placeholder.com/120x200" />
-      <img src="https://via.placeholder.com/120x200" />
-    </div>
-    <button class="btn">Install</button>
-  </div>
-
-  <div class="app-card" onclick="openApp('Smart OCR Reader')">
-    <div class="app-header">
-      <div class="app-icon"></div>
+      <img class="app-icon" src="images/ocr.png" />
       <div>
         <h3>Smart OCR Reader</h3>
-        <small>⭐ 4.6 • Tools</small>
+        <small>⭐ 4.6 • Productivity</small>
       </div>
     </div>
     <div class="screenshots">
-      <img src="https://via.placeholder.com/120x200" />
+      <img src="images/ocr1.png" />
+      <img src="images/ocr2.png" />
     </div>
-    <button class="btn">Install</button>
+    <button class="btn">View Details</button>
+  </div>
+
+  <div class="app-card" onclick="openPage('islamic')">
+    <div class="app-header">
+      <img class="app-icon" src="images/islamic.png" />
+      <div>
+        <h3>Islamic Application</h3>
+        <small>⭐ 4.8 • Islamic</small>
+      </div>
+    </div>
+    <div class="screenshots">
+      <img src="images/islamic1.png" />
+      <img src="images/islamic2.png" />
+    </div>
+    <button class="btn">View Details</button>
   </div>
 
 </section>
 
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span class="close" onclick="closeModal()">X</span>
-    <h2 id="modal-title"></h2>
-    <p>App details will go here (description, features, etc.)</p>
-  </div>
+<!-- APP DETAILS -->
+<div id="details" class="details-page">
+  <span class="back-btn" onclick="goBack()">⬅ Back</span>
+  <h2 id="appTitle"></h2>
+  <p id="appDesc"></p>
+  <a id="appLink" target="_blank">
+    <button class="btn">Download on Google Play</button>
+  </a>
 </div>
 
 <script>
-function openApp(name) {
-  document.getElementById('modal').style.display = 'flex';
-  document.getElementById('modal-title').innerText = name;
+function openPage(app) {
+  document.getElementById('apps').style.display = 'none';
+  document.getElementById('searchBox').style.display = 'none';
+  document.getElementById('mainHeader').style.display = 'none';
+  document.getElementById('details').style.display = 'block';
+
+  if(app === 'ocr'){
+    document.getElementById('appTitle').innerText = 'Smart OCR Reader';
+    document.getElementById('appDesc').innerText = 'Scan and extract text instantly using powerful OCR technology. Fast, accurate and easy.';
+    document.getElementById('appLink').href = 'https://play.google.com/store/apps/details?id=com.h1.smartocr';
+  }
+
+  if(app === 'islamic'){
+    document.getElementById('appTitle').innerText = 'Islamic Application';
+    document.getElementById('appDesc').innerText = 'All-in-one Islamic app including Quran, Azkar, prayer times and more.';
+    document.getElementById('appLink').href = 'https://play.google.com/store/apps/details?id=com.ramzoun.islamicapplication';
+  }
 }
 
-function closeModal() {
-  document.getElementById('modal').style.display = 'none';
+function goBack(){
+  document.getElementById('apps').style.display = 'grid';
+  document.getElementById('searchBox').style.display = 'block';
+  document.getElementById('mainHeader').style.display = 'block';
+  document.getElementById('details').style.display = 'none';
 }
 
 function searchApps(value) {
