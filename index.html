@@ -1,30 +1,222 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Ramzo Coding</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ramzoun Coding</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+  <style>
+    :root {
+      --primary: #0a192f;
+      --accent: #00cfff;
+      --card: #112240;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--primary);
+      color: white;
+    }
+
+    #particles-js {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
+      text-align: center;
+      padding: 100px 20px 50px;
+    }
+
+    h1 { color: var(--accent); font-size: 50px; }
+
+    /* SEARCH */
+    .search-box {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .search-box input {
+      padding: 12px;
+      width: 300px;
+      border-radius: 20px;
+      border: none;
+      outline: none;
+    }
+
+    /* APPS GRID */
+    .apps-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      padding: 20px;
+    }
+
+    .app-card {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 20px;
+      transition: 0.3s;
+      cursor: pointer;
+    }
+
+    .app-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(0,207,255,0.3);
+    }
+
+    .app-header {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .app-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 15px;
+      background: #ccc;
+    }
+
+    .screenshots {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+
+    .screenshots img {
+      width: 120px;
+      border-radius: 10px;
+    }
+
+    .btn {
+      margin-top: 10px;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    /* MODAL */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: #111;
+      padding: 20px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 600px;
+    }
+
+    .close {
+      float: right;
+      cursor: pointer;
+      color: red;
+    }
+
+  </style>
 </head>
 
 <body>
 
-<div class="header">
-<h1>Ramzo Coding</h1>
-<p>Android Apps Development</p>
-<a class="btn" href="apps.html">استكشف التطبيقات</a>
+<div id="particles-js"></div>
+
+<header>
+  <h1>Ramzoun Coding</h1>
+  <p>Build. Innovate. Code.</p>
+</header>
+
+<div class="search-box">
+  <input type="text" placeholder="Search apps..." onkeyup="searchApps(this.value)" />
 </div>
 
-<div class="section">
-<h2>من نحن</h2>
-<div class="card">
-<p>
-Ramzo Coding جهة تطوير تطبيقات أندرويد تشمل:
-تطبيق القرآن الكريم، OCR، الألعاب،
-والأدوات المفيدة للمستخدم العربي.
-</p>
-</div>
+<section class="apps-container" id="apps">
+
+  <div class="app-card" onclick="openApp('Fruity Match Blast')">
+    <div class="app-header">
+      <div class="app-icon"></div>
+      <div>
+        <h3>Fruity Match Blast</h3>
+        <small>⭐ 4.8 • Game</small>
+      </div>
+    </div>
+    <div class="screenshots">
+      <img src="https://via.placeholder.com/120x200" />
+      <img src="https://via.placeholder.com/120x200" />
+    </div>
+    <button class="btn">Install</button>
+  </div>
+
+  <div class="app-card" onclick="openApp('Smart OCR Reader')">
+    <div class="app-header">
+      <div class="app-icon"></div>
+      <div>
+        <h3>Smart OCR Reader</h3>
+        <small>⭐ 4.6 • Tools</small>
+      </div>
+    </div>
+    <div class="screenshots">
+      <img src="https://via.placeholder.com/120x200" />
+    </div>
+    <button class="btn">Install</button>
+  </div>
+
+</section>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">X</span>
+    <h2 id="modal-title"></h2>
+    <p>App details will go here (description, features, etc.)</p>
+  </div>
 </div>
 
-<footer>© Ramzo Coding</footer>
+<script>
+function openApp(name) {
+  document.getElementById('modal').style.display = 'flex';
+  document.getElementById('modal-title').innerText = name;
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function searchApps(value) {
+  let cards = document.querySelectorAll('.app-card');
+  cards.forEach(card => {
+    card.style.display = card.innerText.toLowerCase().includes(value.toLowerCase()) ? 'block' : 'none';
+  });
+}
+
+particlesJS("particles-js", {
+  particles: {
+    number: { value: 70 },
+    size: { value: 3 },
+    move: { speed: 2 },
+    line_linked: { enable: true },
+    color: { value: "#00cfff" }
+  }
+});
+</script>
+
 </body>
 </html>
